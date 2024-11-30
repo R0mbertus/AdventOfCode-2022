@@ -8,6 +8,9 @@ This year I decided upon using [cargo-aoc](https://github.com/gobanos/cargo-aoc)
 specifics. In short, use the following commands
 
 ```sh
+# install the lib
+cargo install cargo-aoc
+
 # If input not provided, set your own aoc token to be able to retrieve the input
 cargo aoc credentials {token}
 
