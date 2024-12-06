@@ -47,23 +47,18 @@ fn traverse_map(
     y: &mut usize,
     guard: &mut char,
 ) -> Option<u32> {
-    let (mut encounters, mut encounter_guard) = (0, vec![]);
+    let mut path = vec![];
     while let Some(pos) = map.get(*y).get_or_insert(&vec![]).get(*x) {
-        if pos == &'O' {
-            if encounters > 0 && encounter_guard.contains(guard) {
-                return None;
-            } else {
-                encounters += 1;
-                encounter_guard.push(*guard);
-            }
-        }
-
-        if pos == &'#' || pos == &'O' {
+        if path.contains(&(*x, *y, *guard)) {
+            return None;
+        } else if pos == &'#' {
             let (dx, dy) = get_direction(*guard);
             *x = x.wrapping_sub(dx as usize);
             *y = y.wrapping_sub(dy as usize);
             *guard = change_direction(*guard);
         }
+
+        path.push((*x, *y, *guard));
 
         map[*y][*x] = 'X';
 
@@ -97,7 +92,7 @@ fn part2(input: &(Vec<Vec<char>>, (usize, usize, char))) -> u32 {
     }) {
         let (mut x, mut y, mut guard) = input.1.clone();
         let old = map[ny][nx];
-        map[ny][nx] = 'O';
+        map[ny][nx] = '#';
         loops += traverse_map(&mut map, &mut x, &mut y, &mut guard).is_none() as u32;
         map[ny][nx] = old;
     }
