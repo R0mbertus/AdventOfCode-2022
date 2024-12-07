@@ -10,7 +10,7 @@ fn parse1(input: &str) -> (Vec<Vec<char>>, (usize, usize, char)) {
         .find_map(|(y, l)| {
             l.iter().enumerate().find_map(|(x, c)| {
                 if c != &'#' && c != &'.' {
-                    Some((x, y, c.clone()))
+                    Some((x, y, *c))
                 } else {
                     None
                 }
@@ -42,7 +42,7 @@ fn get_direction(guard: char) -> (i32, i32) {
 }
 
 fn traverse_map(
-    map: &mut Vec<Vec<char>>,
+    map: &mut [Vec<char>],
     x: &mut usize,
     y: &mut usize,
     guard: &mut char,
@@ -85,12 +85,13 @@ fn part1(input: &(Vec<Vec<char>>, (usize, usize, char))) -> u32 {
 fn part2(input: &(Vec<Vec<char>>, (usize, usize, char))) -> u32 {
     let mut loops = 0;
     let mut map = input.0.clone();
-    for (nx, ny) in input.0.iter().enumerate().flat_map(|(y, v)| {
-        v.iter()
-            .enumerate()
-            .map(move |(x, _)| (x.clone(), y.clone()))
-    }) {
-        let (mut x, mut y, mut guard) = input.1.clone();
+    for (nx, ny) in input
+        .0
+        .iter()
+        .enumerate()
+        .flat_map(|(y, v)| v.iter().enumerate().map(move |(x, _)| (x, y)))
+    {
+        let (mut x, mut y, mut guard) = input.1;
         let old = map[ny][nx];
         map[ny][nx] = '#';
         loops += traverse_map(&mut map, &mut x, &mut y, &mut guard).is_none() as u32;

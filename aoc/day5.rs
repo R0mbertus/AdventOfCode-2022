@@ -9,7 +9,7 @@ fn parse1(input: &str) -> (HashMap<u32, Vec<u32>>, Vec<Vec<u32>>) {
         .map(|l| l.split_once('|').expect("Malformed ordering!"))
         .fold(HashMap::<u32, Vec<u32>>::new(), |mut acc, (b, a)| {
             acc.entry(b.parse().unwrap())
-                .or_insert_with(Vec::new)
+                .or_default()
                 .push(a.parse().unwrap());
             acc
         });

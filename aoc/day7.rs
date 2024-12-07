@@ -16,7 +16,7 @@ fn parse1(input: &str) -> Vec<(usize, Vec<usize>)> {
 }
 
 fn solve(concat: bool, target: &usize, result: usize, list: &[usize]) -> bool {
-    if list.len() > 0 {
+    if !list.is_empty() {
         let solve_pre = |r, l| solve(concat, target, r, l);
         solve_pre(result + list[0], &list[1..])
             || solve_pre(result * list[0], &list[1..])
@@ -34,7 +34,8 @@ fn solve(concat: bool, target: &usize, result: usize, list: &[usize]) -> bool {
 fn part1(input: &[(usize, Vec<usize>)]) -> usize {
     input
         .iter()
-        .filter_map(|(e, l)| solve(false, e, l[0], &l[1..]).then(|| e))
+        .filter(|&(e, l)| solve(false, e, l[0], &l[1..]))
+        .map(|(e, _)| e)
         .sum()
 }
 
@@ -42,7 +43,8 @@ fn part1(input: &[(usize, Vec<usize>)]) -> usize {
 fn part2(input: &[(usize, Vec<usize>)]) -> usize {
     input
         .iter()
-        .filter_map(|(e, l)| solve(true, e, l[0], &l[1..]).then(|| e))
+        .filter(|&(e, l)| solve(true, e, l[0], &l[1..]))
+        .map(|(e, _)| e)
         .sum()
 }
 
