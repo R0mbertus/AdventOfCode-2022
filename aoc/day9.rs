@@ -1,6 +1,5 @@
-use std::{i64, usize, vec};
-
 use aoc_runner_derive::{aoc, aoc_generator};
+use std::vec;
 
 #[aoc_generator(day9)]
 fn parse1(input: &str) -> Vec<i64> {
@@ -16,7 +15,7 @@ fn parse1(input: &str) -> Vec<i64> {
             if c.len() == 1 {
                 file
             } else {
-                vec![file, vec![-1; c[1] as usize]].concat()
+                [file, vec![-1; c[1] as usize]].concat()
             }
         })
         .collect()
