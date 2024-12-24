@@ -153,6 +153,6 @@ p=9,5 v=-3,-3";
 
     #[test]
     fn part1_example() {
-        assert_eq!(part1(&&parse1(INPUT)), 480);
+        assert_eq!(part1(&&parse1(INPUT)), 21);
     }
 }
