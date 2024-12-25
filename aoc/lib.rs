@@ -21,5 +21,6 @@ mod day23;
 mod day24;
 mod day19;
 mod day18;
+mod day25;
 
 aoc_lib! { year = 2024 }
