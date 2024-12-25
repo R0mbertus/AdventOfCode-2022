@@ -13,10 +13,10 @@ fn parse1(input: &str) -> HashMap<String, HashSet<String>> {
         })
         .fold(HashMap::new(), |mut acc, (c1, c2)| {
             acc.entry(c1.to_string())
-                .or_insert_with(HashSet::new)
+                .or_default()
                 .insert(c2.to_string());
             acc.entry(c2.to_string())
-                .or_insert_with(HashSet::new)
+                .or_default()
                 .insert(c1.to_string());
             acc
         })
@@ -26,7 +26,7 @@ fn parse1(input: &str) -> HashMap<String, HashSet<String>> {
 fn part1(input: &HashMap<String, HashSet<String>>) -> usize {
     let mut interconnected = HashSet::new();
     for (a, connections) in input.iter() {
-        if a.chars().nth(0).unwrap() != 't' {
+        if !a.starts_with('t') {
             continue;
         }
 

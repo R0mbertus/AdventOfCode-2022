@@ -77,7 +77,7 @@ fn part2(input: &[String]) -> usize {
     (0..75)
         .fold(map, |acc, _| perform_stone_ritual_hash(&acc))
         .values()
-        .fold(0, |acc, x| acc + x)
+        .sum::<usize>()
 }
 
 #[cfg(test)]

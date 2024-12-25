@@ -3,19 +3,10 @@ use std::collections::{HashMap, HashSet};
 use aoc_runner_derive::{aoc, aoc_generator};
 use itertools::Itertools;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 struct Wire {
     on: bool,
     value: u32,
-}
-
-impl Default for Wire {
-    fn default() -> Self {
-        Self {
-            on: false,
-            value: 0,
-        }
-    }
 }
 
 struct Connection {
@@ -42,9 +33,9 @@ fn parse1(input: &str) -> (HashMap<String, Wire>, Vec<Connection>) {
             let (from, to) = l.split_once(" -> ").unwrap();
             let (in1, op_str, in2) = from.split_whitespace().collect_tuple().unwrap();
 
-            wires.entry(to.to_string()).or_insert_with(Wire::default);
-            wires.entry(in1.to_string()).or_insert_with(Wire::default);
-            wires.entry(in2.to_string()).or_insert_with(Wire::default);
+            wires.entry(to.to_string()).or_default();
+            wires.entry(in1.to_string()).or_default();
+            wires.entry(in2.to_string()).or_default();
 
             Connection {
                 in1: in1.to_string(),
@@ -114,11 +105,11 @@ fn part2(input: &(HashMap<String, Wire>, Vec<Connection>)) -> String {
     let is_xyz = |c: char| c == 'x' || c == 'y' || c == 'z';
 
     for conn in input.1.iter() {
-        if (conn.to.chars().nth(0).unwrap() == 'z' && conn.op != "XOR" && conn.to != "z45")
+        if (conn.to.starts_with('z') && conn.op != "XOR" && conn.to != "z45")
             || (conn.op == "XOR"
-                && !is_xyz(conn.in1.chars().nth(0).unwrap())
-                && !is_xyz(conn.in2.chars().nth(0).unwrap()))
-                && !is_xyz(conn.to.chars().nth(0).unwrap())
+                && !is_xyz(conn.in1.chars().next().unwrap())
+                && !is_xyz(conn.in2.chars().next().unwrap()))
+                && !is_xyz(conn.to.chars().next().unwrap())
         {
             wrong_pairs.push(conn.to.clone());
         }

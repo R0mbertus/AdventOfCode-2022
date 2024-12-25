@@ -88,7 +88,7 @@ fn find_multipliers(machine: &Machine) -> Vec<(isize, isize)> {
 
 #[aoc(day13, part1)]
 fn part1(input: &[Machine]) -> isize {
-    input.into_iter().fold(0, |acc, m| {
+    input.iter().fold(0, |acc, m| {
         acc + find_multipliers(m)
             .iter()
             .map(|(a, b)| a * 3 + b)
@@ -116,7 +116,7 @@ fn find_multiplier_linear(machine: &Machine) -> (f64, f64) {
 #[aoc(day13, part2)]
 fn part2(input: &[Machine]) -> isize {
     input
-        .into_iter()
+        .iter()
         .map(|m| {
             let (x, y) = find_multiplier_linear(m);
             if x.fract() != 0.0 || y.fract() != 0.0 || x < 0.0 || y < 0.0 {

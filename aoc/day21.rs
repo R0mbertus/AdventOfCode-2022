@@ -71,7 +71,7 @@ fn length(code: String, depth: usize) -> usize {
 
 #[aoc(day21, part1)]
 fn part1(input: &[String]) -> usize {
-    input.into_iter().fold(0, |acc, l| {
+    input.iter().fold(0, |acc, l| {
         let len = length(l.to_string(), 3);
         let num = l[..l.len() - 1].parse::<usize>().unwrap();
         acc + (num * len)
@@ -80,7 +80,7 @@ fn part1(input: &[String]) -> usize {
 
 #[aoc(day21, part2)]
 fn part2(input: &[String]) -> usize {
-    input.into_iter().fold(0, |acc, l| {
+    input.iter().fold(0, |acc, l| {
         let len = length(l.to_string(), 26);
         let num = l[..l.len() - 1].parse::<usize>().unwrap();
         acc + (num * len)

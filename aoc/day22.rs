@@ -43,7 +43,7 @@ fn part2(input: &[isize]) -> isize {
         .map(|e| {
             e.iter()
                 .tuple_windows::<(_, _)>()
-                .map(|(&a, &b)| b as isize - a as isize)
+                .map(|(&a, &b)| b - a)
                 .collect()
         })
         .collect();
@@ -62,7 +62,7 @@ fn part2(input: &[isize]) -> isize {
             keys.insert(key);
         }
     }
-    max.into_iter().map(|(_, v)| v).max().unwrap()
+    max.into_values().max().unwrap()
 }
 
 #[cfg(test)]
